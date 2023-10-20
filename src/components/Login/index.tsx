@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Button,
@@ -9,8 +8,26 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import Api from "../../Api";
 
 const Login = (): JSX.Element => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+    const submit = async () => {
+    try {
+      const datos = { email, password };
+      const token = await Api.post("/auth/login", datos);
+      localStorage.setItem("t", JSON.stringify(token.data));
+      alert("Usuário Logado")
+      } catch (error) {
+        console.log(error)
+      alert(error)
+      
+    }
+  };
+
   return (
     <Box
       width={"100vw"}
@@ -18,11 +35,18 @@ const Login = (): JSX.Element => {
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
-      backgroundImage={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1PawjGfwwWVARqgH4m-gUrTt0ACLHOYLuFg&usqp=CAU"}
-      >
-        <Box width={"100vw"} height={"100vh"} position={"absolute"} backgroundColor={"#80808080"}></Box>
+      backgroundImage={
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1PawjGfwwWVARqgH4m-gUrTt0ACLHOYLuFg&usqp=CAU"
+      }
+    >
+      <Box
+        width={"100vw"}
+        height={"100vh"}
+        position={"absolute"}
+        backgroundColor={"#80808080"}
+      ></Box>
       <Flex
-      margin={"auto"}
+        margin={"auto"}
         flexDirection={"column"}
         alignItems={"center"}
         gap={"1rem"}
@@ -33,21 +57,48 @@ const Login = (): JSX.Element => {
         padding={"2rem"}
         boxShadow={"1rem 1rem 1rem 0"}
         background={"white"}
+        zIndex={"2"}
       >
         <Text fontSize="2rem" fontWeight="bold" mb={4}>
           Login
         </Text>
         <FormControl>
+
           <FormLabel>Email:</FormLabel>
-          <Input type="email" placeholder="Seu email" padding={"0.6rem"} width={"20rem"} borderRadius={"0.5rem"}/>
+          <Input
+            type="email"
+            placeholder="Seu email"
+            padding={"0.6rem"}
+            width={"20rem"}
+            borderRadius={"0.5rem"}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
         </FormControl>
 
         <FormControl mt={4}>
           <FormLabel>Senha:</FormLabel>
-          <Input type="password" placeholder="Sua senha" padding={"0.6rem"} width={"20rem"} borderRadius={"0.5rem"}/>
+          <Input
+            type="password"
+            placeholder="Sua senha"
+            padding={"0.6rem"}
+            width={"20rem"}
+            borderRadius={"0.5rem"}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
         </FormControl>
 
-        <Button mt={4} colorScheme="teal" width="full" padding={"0.6rem 2rem"} borderRadius={"0.5rem"}>
+        <Button
+          mt={4}
+          colorScheme="teal"
+          width="full"
+          padding={"0.6rem 2rem"}
+          borderRadius={"0.5rem"}
+          onClick={submit}
+        >
           Entrar
         </Button>
 
@@ -69,3 +120,6 @@ const Login = (): JSX.Element => {
 };
 
 export default Login;
+function userState(): [any, any] {
+  throw new Error("Function not implemented.");
+}
