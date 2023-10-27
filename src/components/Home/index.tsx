@@ -6,15 +6,30 @@ import {
   Input,
   Textarea,
   background,
-  border,
-} from "@chakra-ui/react";
+  } from "@chakra-ui/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Api from "../../Api";
 
 interface Iprops {
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Home = ({ setLogged }: Iprops) => {
+  const [tokenbot, setTokenBot] = useState<string>()
+  const [chatid, setChatId] = useState<string>()
+  const [schedule, setSchedule] = useState<string>()
+  const [message, setMessage] = useState<string>()
+
+  const sendDatos = async () => {
+    try {
+      await Api.post("telegram/send", {tokenbot, chatid, schedule, message})
+      alert("Mensagem programada")      
+    } catch (error) {
+      alert("Erro ao programar mensagem !")
+    }
+    };
+
   const navigate = useNavigate();
 
   const Logout = () => {
@@ -50,6 +65,7 @@ const Home = ({ setLogged }: Iprops) => {
             height={"1rem"}
             padding={"0.5rem"}
             borderRadius={"0.5rem"}
+            onChange={(e)=>setTokenBot(e.target.value)}
           />
         </FormControl>
 
@@ -60,7 +76,21 @@ const Home = ({ setLogged }: Iprops) => {
         width={"48rem"} 
         height={"1rem"} 
         padding={"0.5rem"}
-        borderRadius={"0.5rem"} 
+        borderRadius={"0.5rem"}
+        onChange={(e)=>setChatId(e.target.value)} 
+        />
+        </FormControl>
+
+        <FormControl color={"black"} display={"flex"} flexDirection={"column"}>
+        <label>Data e Hora de envio:</label>
+        <Input 
+        id="date-time"
+        type="datetime-local" 
+        width={"48rem"} 
+        height={"1rem"} 
+        padding={"0.5rem"}
+        borderRadius={"0.5rem"}
+        onChange={(e)=>setSchedule(e.target.value)} 
         />
         </FormControl>
 
@@ -72,6 +102,7 @@ const Home = ({ setLogged }: Iprops) => {
           height={"3rem"}
           padding={"0.5rem"}
           borderRadius={"0.5rem"}
+          onChange={(e)=>setMessage(e.target.value)}
         ></Textarea>
         </FormControl>
 
@@ -113,6 +144,7 @@ const Home = ({ setLogged }: Iprops) => {
           border: "1px solid", 
           background: "white"
         }}
+        onClick={sendDatos}
         >
           Programar mensagem
         </Button>
