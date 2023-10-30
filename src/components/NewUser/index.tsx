@@ -2,19 +2,32 @@ import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import ImageUpload from "../ImageUpload";
 import { useState } from "react";
 import Api from "../../Api";
+import { useNavigate } from "react-router-dom";
 
 const NewUser = () => {
   const [picture, setPicture] = useState<[] | string[]>([]);
-  
+  const [name, setName] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [confirmPassword, setConfirmPassword] = useState<string>();
+  const [email, setEmail] = useState<string>();
+
+  const navigate = useNavigate();
 
   const sendDatos = async () => {
     try {
-      await Api.post("/user", {
-        picture,
-      });
-      alert("Usuário Cadastrado");
+      if (password !== confirmPassword) throw Error("As senhas não são iguais");
+      else {
+        await Api.post("/user", {
+          picture: picture[0],
+          name,
+          password,
+          email,
+        });
+        alert("Usuário Cadastrado com sucesso !");
+        navigate("/");
+      }
     } catch (error) {
-      alert("Erro ao cadastrar usuário !");
+      alert("Erro ao cadastrar usuário!" + error.message);
     }
   };
 
@@ -44,6 +57,7 @@ const NewUser = () => {
           height={"1rem"}
           padding={"0.5rem"}
           borderRadius={"0.5rem"}
+          onChange={(e) => setName(e.target.value)}
         ></Input>
       </FormControl>
 
@@ -56,6 +70,7 @@ const NewUser = () => {
           height={"1rem"}
           padding={"0.5rem"}
           borderRadius={"0.5rem"}
+          onChange={(e) => setEmail(e.target.value)}
         ></Input>
       </FormControl>
 
@@ -68,6 +83,7 @@ const NewUser = () => {
           height={"1rem"}
           padding={"0.5rem"}
           borderRadius={"0.5rem"}
+          onChange={(e) => setPassword(e.target.value)}
         ></Input>
       </FormControl>
 
@@ -80,13 +96,14 @@ const NewUser = () => {
           height={"1rem"}
           padding={"0.5rem"}
           borderRadius={"0.5rem"}
+          onChange={(e)=> setConfirmPassword(e.target.value)}
         ></Input>
       </FormControl>
 
       <ImageUpload images={picture} setImages={setPicture} maxImages={1} />
 
-      <Button 
-        padding={"1.5rem 2.3rem"} 
+      <Button
+        padding={"1.5rem 2.3rem"}
         borderRadius={"1.3em"}
         fontSize={"1.3rem"}
         fontWeight={"600"}
@@ -95,16 +112,15 @@ const NewUser = () => {
         border={"none"}
         cursor={"pointer"}
         _hover={{
-          color:"#00a2ff", 
-          border: "1px solid", 
-          background: "white"
+          color: "#00a2ff",
+          border: "1px solid",
+          background: "white",
         }}
         marginBottom={"2rem"}
         onClick={sendDatos}
-        >
-          Enviar
-        </Button>
-
+      >
+        Enviar
+      </Button>
     </Flex>
   );
 };
