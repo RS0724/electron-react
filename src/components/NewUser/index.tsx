@@ -46,7 +46,7 @@ const NewUser = () => {
       color={"black"}
       boxShadow={"1rem 1rem 1.5rem 0"}
     >
-      <h1 style={{ color: "blue" }}>Cadastrar Novo Usuário</h1>
+      <h1 style={{ color: "#1E90FF" }}>Cadastrar Novo Usuário</h1>
 
       <FormControl>
         <FormLabel fontWeight={800}>Nome:</FormLabel>
