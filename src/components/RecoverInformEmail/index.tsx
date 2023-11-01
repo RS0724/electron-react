@@ -11,10 +11,21 @@ import {
   import { useState, useEffect } from "react";
   import Api from "../../Api";
   import { useNavigate } from "react-router-dom";
+
+  interface IProps{
+    setBooleanTokenEmail: React.Dispatch<React.SetStateAction<boolean>>
+    setBooleanInformEmail: React.Dispatch<React.SetStateAction<boolean>>
+  }
   
-    const RecoverInformEmail = (): JSX.Element => {
+    const RecoverInformEmail = ({setBooleanTokenEmail,  setBooleanInformEmail}: IProps): JSX.Element => {
     const [email, setEmail] = useState<string>("");
     const navigate = useNavigate()
+
+    const submit = () => {
+      setBooleanTokenEmail(true)
+      setBooleanInformEmail(false)
+      alert("Caso e-mail exista foi enviado token de recuperação, verifique sua caixa de spam caso não encontre")
+    }
   
     return (
       <Box
@@ -24,7 +35,7 @@ import {
         justifyContent={"center"}
         alignItems={"center"}
         backgroundImage={
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1PawjGfwwWVARqgH4m-gUrTt0ACLHOYLuFg&usqp=CAU"
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxkQM36Nc7mj3Io8awrzsa1dU_RSmtcZq_pw&usqp=CAU"
         }
       >
         <Box
@@ -44,7 +55,7 @@ import {
           height={"35%"}
           padding={"2rem"}
           boxShadow={"1rem 1rem 1rem 0"}
-          background={"white"}
+          background={"#00FFFF"}
           zIndex={"2"}
         >
           <Text fontSize="2rem" fontWeight="bold" mb={4}>
@@ -82,6 +93,7 @@ import {
           background: "white",
         }}
         marginBottom={"2rem"}
+        onClick={submit}
        >
         Enviar
       </Button>

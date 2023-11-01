@@ -116,7 +116,7 @@ const Login = ({setLogged}: Iprops): JSX.Element => {
         </Button>
 
         <Text mt={2}>
-          <Link color="teal.500" href="#">
+          <Link color="teal.500" href="#recover">
             Esqueceu a senha?
           </Link>
         </Text>

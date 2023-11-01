@@ -12,9 +12,22 @@ import { useState, useEffect } from "react";
 import Api from "../../Api";
 import { useNavigate } from "react-router-dom";
 
-const RecoverInformTokenEmail = (): JSX.Element => {
+interface IProps {
+  setBooleanTokenEmail: React.Dispatch<React.SetStateAction<boolean>>;
+  setBooleanInformNewPassword: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const RecoverInformTokenEmail = ({
+  setBooleanTokenEmail,
+  setBooleanInformNewPassword,
+}: IProps): JSX.Element => {
   const [tokenEmail, setTokenEmail] = useState<string>("");
   const navigate = useNavigate();
+
+  const submit = () => {
+    setBooleanTokenEmail(false)
+    setBooleanInformNewPassword(true)
+    };
 
   return (
     <Box
@@ -24,7 +37,7 @@ const RecoverInformTokenEmail = (): JSX.Element => {
       justifyContent={"center"}
       alignItems={"center"}
       backgroundImage={
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1PawjGfwwWVARqgH4m-gUrTt0ACLHOYLuFg&usqp=CAU"
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBxqRMGjbXV3VCZ42DQC7yK1rmcRZ65-vAmQ&usqp=CAU"
       }
     >
       <Box
@@ -44,7 +57,7 @@ const RecoverInformTokenEmail = (): JSX.Element => {
         height={"35%"}
         padding={"2rem"}
         boxShadow={"1rem 1rem 1rem 0"}
-        background={"white"}
+        background={"#D8BFD8"}
         zIndex={"2"}
       >
         <Text fontSize="2rem" fontWeight="bold" mb={4}>
