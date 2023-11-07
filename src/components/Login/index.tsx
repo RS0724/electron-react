@@ -69,7 +69,7 @@ const Login = ({setLogged}: Iprops): JSX.Element => {
         height={"35%"}
         padding={"2rem"}
         boxShadow={"1rem 1rem 1rem 0"}
-        background={"white"}
+        background={"#00FFFF"}
         zIndex={"2"}
       >
         <Text fontSize="2rem" fontWeight="bold" mb={4}>
