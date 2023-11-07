@@ -12,7 +12,7 @@ const NewUser = () => {
   const [email, setEmail] = useState<string>();
 
   const navigate = useNavigate();
-
+  
   const sendDatos = async () => {
     try {
       if (password !== confirmPassword) throw Error("As senhas não são iguais");
